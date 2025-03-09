@@ -1,30 +1,31 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+import Inputs from './components/Inputs'
 function App() {
   const [count, setCount] = useState(0)
-
+  const [currencyNames, setcurrencyNames] = useState(0)
+  useEffect(() => {
+    fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json")
+    .then((res)=>res.json())
+    .then((data)=>setcurrencyNames(data))
+  }, [])
+  // console.log(currencyNames);
+  
   return (
     <>
-      <div>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button className='bg-yellow-400 transition-all duration-500 ease-in-out text-white px-4 py-2 rounded-full font-bold border border-yellow-400 hover:bg-white hover:text-yellow-400' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="relative w-screen h-screen flex items-center justify-center  " id='converter'>
+  
+  <div className="absolute inset-0 bg-[url('/img/bg.webp')] bg-center bg-cover opacity-70"></div>
+
+  
+  <div className="relative z-10 px-4">
+    {/* Currency Selector */}
+    <Inputs currency={currencyNames} />
+  </div>
+</div>
+
     </>
   )
 }
